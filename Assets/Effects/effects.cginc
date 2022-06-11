@@ -26,7 +26,7 @@ float chromatic_wheel__sat(float x)
 fixed4 chromatic_wheel(float2 uv)
 {
     float2 cp = 2. * uv - 1.;
-    float d = atan(cp.y / cp.x) / 6.283185; // -pi < atan() <= +pi
+    float d = atan2(cp.y, cp.x) / 6.283185; // -pi < atan() <= +pi
     float t = _Time.y / 3.;         // change every 3 seconds
     fixed4 f = fixed4(
         2. * mix(chromatic_wheel__hue2rgb(d * chromatic_wheel__sat(t)), chromatic_wheel__hue2rgb(d * chromatic_wheel__sat(t + 1.)), t - floor(t)),
@@ -58,5 +58,45 @@ float2 wobble(float2 uv, float speed, float frequency, float amplitude)
 
     return r + amplitude * (p - q);
 }
+
+
+/* Eye of Ezbhan */
+// source: https://www.shadertoy.com/view/td3Xzr
+
+float2 ezbhan__spiralPosition(float t)
+{
+    float THETA = 2.399963229728653;
+    float angle = t * THETA - _Time.y * .001; 
+    float radius = ( t + .5 ) * .5;
+    return float2(radius * cos(angle) + .5, radius * sin(angle) + .5 );
+}
+
+fixed4 ezbhan(float2 iuv, float ratio)
+{
+    ratio = 1. / ratio;
+    float2 suv = iuv;
+    suv.y = suv.y * ratio;
+    float2 sres = float2(1.0, ratio);
+    
+    float2 uv = (suv - .5 * sres) / sres.y * 1024.;
+    
+    float a = 0.;
+    float d = 50.;
+    
+    for(int i = 0; i < 256; i++)
+    {
+        float2 pointDist = uv - ezbhan__spiralPosition(float(i)) * 6.66;
+        a += atan2(pointDist.x, pointDist.y);
+        d = min(dot( pointDist, pointDist), d);
+    }
+    
+    d = sqrt(d) * .02;
+    d = 1. - pow(1. - d, 32.);
+    a += sin(length(uv) * .01 + _Time.y * .5 ) * 2.75;
+    float3 col = d * (.5 + .5 * sin(a + _Time.y + float3( 2.9, 1.7, 0)));
+
+    return fixed4(col, 1.0);
+}
+
 
 #endif

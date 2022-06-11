@@ -438,6 +438,8 @@ GameObject:
   - component: {fileID: 2072152264}
   - component: {fileID: 2072152263}
   - component: {fileID: 2072152266}
+  - component: {fileID: 2072152267}
+  - component: {fileID: 2072152268}
   m_Layer: 0
   m_Name: maincam
   m_TagString: Untagged
@@ -524,6 +526,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1341592399}
+--- !u!114 &2072152267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072152262}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0ef9a1aff9a24b99ae829a6ea37dd23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 0.2
+  Frequency: 8
+  AmplitudeFactor: 1
+  EffectOpacity: 0.4
+--- !u!114 &2072152268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072152262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 389cd1bbe32264d0b9fbc15ae3ebecbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Displacement: 0.001
+  EffectOpacity: 0.4
 --- !u!1001 &1577404647784754446
 PrefabInstance:
   m_ObjectHideFlags: 0
