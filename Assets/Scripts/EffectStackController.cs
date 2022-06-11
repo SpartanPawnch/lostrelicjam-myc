@@ -4,19 +4,11 @@ using UnityEngine;
 
 public class EffectStackController : MonoBehaviour
 {
-    public enum EffectStack {
-        None,
-        Mushroom2,
-        Mushroom3,
-        Mushroom4,
-        Mushroom5,
-    }
-
     private Ezbhan ezbhan;
     private LSDChromaticwheel lsdChromaticWheel;
     private ChromaticWaves chromaticWaves;
 
-    public EffectStack Stack;
+    public MushroomAreas MushroomArea;
     [Range(0,1)] public float Intensity;
 
 
@@ -32,14 +24,14 @@ public class EffectStackController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (Stack)
+        switch (MushroomArea)
         {
-            case EffectStack.None:
+            case MushroomAreas.None:
                 ezbhan.enabled = false;
                 lsdChromaticWheel.enabled = false;
                 chromaticWaves.enabled = false;
                 break;
-            case EffectStack.Mushroom2:
+            case MushroomAreas.Mushroom2:
                 ezbhan.enabled = true;
                 lsdChromaticWheel.enabled = false;
                 chromaticWaves.enabled = false;
@@ -47,11 +39,11 @@ public class EffectStackController : MonoBehaviour
                 ezbhan.EffectOpacity = Intensity * 1f;
                 ezbhan.Displacement = 0.001f + (Intensity * 0.01f);
                 break;
-            case EffectStack.Mushroom3:
+            case MushroomAreas.Mushroom3:
                 break;
-            case EffectStack.Mushroom4:
+            case MushroomAreas.Mushroom4:
                 break;
-            case EffectStack.Mushroom5:
+            case MushroomAreas.Mushroom5:
                 break;
         }
     }
