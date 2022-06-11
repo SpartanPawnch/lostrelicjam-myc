@@ -8,12 +8,11 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float maxVelocity = 10.0f;
     [SerializeField] private float drag = .1f;
 
-    private Vector3 initialPosition;
+    [SerializeField] private float rotateSpeed = 10;
 
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -26,13 +25,16 @@ public class CharacterControl : MonoBehaviour
         activeRigidbody.velocity = Vector3.ClampMagnitude(activeRigidbody.velocity,
             activeRigidbody.velocity.magnitude - drag * Time.deltaTime);
 
+        //rotate playeer
+        transform.Rotate(new Vector3(0, horizontalAxis * rotateSpeed * Time.deltaTime, 0));
 
         //apply accelleration
-        Vector3 directionalForce = new Vector3(horizontalAxis, 0.0f, verticalAxis);
 
-        activeRigidbody.velocity += acceleration * directionalForce * Time.deltaTime;
+        activeRigidbody.velocity += acceleration * transform.forward * verticalAxis * Time.deltaTime;
 
         activeRigidbody.velocity = Vector3.ClampMagnitude(activeRigidbody.velocity, maxVelocity);
+
+
 
     }
 
