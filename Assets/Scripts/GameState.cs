@@ -12,6 +12,7 @@ public class GameState : MonoBehaviour
 
     private Vector3 respawnLocation;
     private CameraFollow thirdPersonAccessor;
+    private AudioSource topdownSound;
 
     public void Start()
     {
@@ -20,6 +21,7 @@ public class GameState : MonoBehaviour
         topdownCamera.enabled = true;
         respawnLocation = initialSpawnLocation.transform.position;
         thirdPersonAccessor = thirdPersonCamera.GetComponent<CameraFollow>();
+        topdownSound = topdownCamera.GetComponent<AudioSource>();
     }
 
     public void Update()
@@ -40,6 +42,7 @@ public class GameState : MonoBehaviour
             character.SetActive(false);
             thirdPersonCamera.enabled = false;
             topdownCamera.enabled = true;
+            topdownSound.UnPause();
         }
         else
         {
@@ -51,6 +54,7 @@ public class GameState : MonoBehaviour
             thirdPersonAccessor?.beginTransition(initialPos);
             topdownCamera.enabled = false;
             character.transform.position = respawnLocation;
+            topdownSound.Pause();
 
         }
     }
