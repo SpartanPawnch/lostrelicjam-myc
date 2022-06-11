@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterControl : MonoBehaviour
@@ -9,6 +7,8 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] private float acceleration = 2.0f;
     [SerializeField] private float maxVelocity = 10.0f;
     [SerializeField] private float drag = .1f;
+
+    private Vector3 initialPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -35,4 +35,5 @@ public class CharacterControl : MonoBehaviour
         activeRigidbody.velocity = Vector3.ClampMagnitude(activeRigidbody.velocity, maxVelocity);
 
     }
+
 }
