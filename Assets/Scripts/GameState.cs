@@ -11,6 +11,7 @@ public class GameState : MonoBehaviour
     [SerializeField] private Camera topdownCamera;
 
     private Vector3 respawnLocation;
+    private CameraFollow thirdPersonAccessor;
 
     public void Start()
     {
@@ -18,6 +19,7 @@ public class GameState : MonoBehaviour
         thirdPersonCamera.enabled = false;
         topdownCamera.enabled = true;
         respawnLocation = initialSpawnLocation.transform.position;
+        thirdPersonAccessor = thirdPersonCamera.GetComponent<CameraFollow>();
     }
 
     public void Update()
@@ -42,9 +44,14 @@ public class GameState : MonoBehaviour
         else
         {
             character.SetActive(true);
+            //change active camera
             thirdPersonCamera.enabled = true;
+            //setup camera transition
+            Vector3 initialPos = character.transform.InverseTransformPoint(topdownCamera.transform.position);
+            thirdPersonAccessor?.beginTransition(initialPos);
             topdownCamera.enabled = false;
             character.transform.position = respawnLocation;
+
         }
     }
 

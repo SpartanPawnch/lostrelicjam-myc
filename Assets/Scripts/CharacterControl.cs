@@ -36,13 +36,4 @@ public class CharacterControl : MonoBehaviour
 
     }
 
-    void Awake()
-    {
-        initialPosition = transform.localPosition;
-    }
-
-    void OnEnable()
-    {
-        transform.localPosition = initialPosition;
-    }
 }
