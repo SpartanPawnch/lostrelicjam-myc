@@ -6,19 +6,23 @@ public class SwitchableObj : MonoBehaviour
 {
     [SerializeField] private MeshRenderer mesh3d;
     [SerializeField] private SpriteRenderer sprite2d;
-    private bool use3d = true;
+
+    [SerializeField] private GameState gameState;
+    private bool use3d = false;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        mesh3d.enabled = use3d;
+        sprite2d.enabled = !use3d;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Swap"))
-            SwitchDisplay();
+        use3d = !gameState.inTopdown;
+        mesh3d.enabled = use3d;
+        sprite2d.enabled = !use3d;
     }
 
     void SwitchDisplay()
