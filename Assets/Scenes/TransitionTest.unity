@@ -582,6 +582,7 @@ MonoBehaviour:
   acceleration: 20
   maxVelocity: 20
   drag: 4
+  rotateSpeed: 10
 --- !u!1 &1386836862
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,7 +833,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1341592399}
-  transitionMult: 0.2
+  transitionMult: 0.02
+  customOffset: {x: 20, y: 1}
 --- !u!1001 &1577404647784754446
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -24,20 +24,22 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.localPosition = customOffset.x * target.transform.forward; // horizontal offset
+        transform.position = target.transform.position - customOffset.x * target.transform.forward; // horizontal offset
         transform.LookAt(target.transform); // look at player
+        transform.Translate(new Vector3(.0f, customOffset.y, .0f));
 
         //execute transition
         transitionDelta = Mathf.Clamp(transitionDelta - (Time.deltaTime / transitionSpeed), .0f, 1.0f);
-        Vector3 targetPosition = transform.localPosition;
-        transform.localPosition = transitionDelta * initialPosition + (1.0f - transitionDelta) * targetPosition;
+        Vector3 targetPosition = transform.position;
+        transform.position = transitionDelta * initialPosition + (1.0f - transitionDelta) * targetPosition;
     }
 
     public void beginTransition(Vector3 initialPos)
     {
         transitionDelta = 1.0f;
         initialPosition = initialPos;
-        transitionSpeed = transitionMult * Vector3.Distance(customOffset.x * target.transform.forward, initialPos);
+        transitionSpeed = transitionMult * Vector3.Distance(target.transform.position - (customOffset.x *
+            target.transform.forward), initialPos);
     }
 
 

@@ -50,7 +50,7 @@ public class GameState : MonoBehaviour
             //change active camera
             thirdPersonCamera.enabled = true;
             //setup camera transition
-            Vector3 initialPos = character.transform.InverseTransformPoint(topdownCamera.transform.position);
+            Vector3 initialPos = topdownCamera.transform.position;//character.transform.InverseTransformPoint(topdownCamera.transform.position);
             thirdPersonAccessor?.beginTransition(initialPos);
             topdownCamera.enabled = false;
             character.transform.position = respawnLocation;
