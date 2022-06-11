@@ -54,7 +54,7 @@ Shader "Hidden/LSDChromaticWheel"
                 float2 s = wobble(i.uv, _Speed, _Frequency, _Amplitude);
                 fixed4 f = chromatic_wheel(s);
                 fixed4 col = tex2D(_MainTex, i.uv);
-                return blend_overlay(col, f, _EffectOpacity);
+                return blend_negation(col, f, _EffectOpacity);
             }
             ENDCG
         }
