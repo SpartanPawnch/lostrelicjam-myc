@@ -98,5 +98,31 @@ fixed4 ezbhan(float2 iuv, float ratio)
     return fixed4(col, 1.0);
 }
 
+/* Waves */
+//source: https://www.shadertoy.com/view/NtByDt
+float waves__dx(float2 p) {
+    return -normalize(p).x * sin(length(p) - _Time.y);
+}
+
+fixed4 waves(float2 iuv, float ratio, float2 light_position)
+{
+    ratio = 1. / ratio;
+    float2 suv = iuv;
+    suv.y = suv.y * ratio;
+    float2 sres = float2(1.0, ratio);
+
+    float2 light_suv = light_position;
+    light_suv.y = light_suv.y * ratio;
+    
+    float2 uv = (2 * suv - sres) / sres.y * 10.;
+    float2 light_uv =  (2 * light_suv - sres) / sres.y * 10.;
+
+    float3 n = normalize(cross(float3(1, 0, waves__dx(uv)), float3(0, 1, waves__dx(uv.yx))));
+    float3 mousedir = float3(light_uv, 1);
+    float v = dot(n, mousedir);
+    float3 col  = v < 0. ? -v * float3(.1, .1, .2) : v * float3(.7, .7, .5);
+    
+    return fixed4(col, 1.0);
+}
 
 #endif
