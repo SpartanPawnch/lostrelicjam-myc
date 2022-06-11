@@ -9,6 +9,7 @@ public class CameraFollow : MonoBehaviour
 
     //positions for transtion
     private Vector3 initialPosition = new Vector3(.0f, .0f, .0f);
+    private Quaternion initialRotation;
 
     //transition timing
     private float transitionSpeed = 1.0f;
@@ -24,20 +25,21 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = target.transform.position - customOffset.x * target.transform.forward; // horizontal offset
+        transform.position = target.transform.position - customOffset.x * target.transform.forward + new Vector3(.0f, customOffset.y, .0f); // horizontal offset
         transform.LookAt(target.transform); // look at player
-        transform.Translate(new Vector3(.0f, customOffset.y, .0f));
 
         //execute transition
         transitionDelta = Mathf.Clamp(transitionDelta - (Time.deltaTime / transitionSpeed), .0f, 1.0f);
-        Vector3 targetPosition = transform.position;
-        transform.position = transitionDelta * initialPosition + (1.0f - transitionDelta) * targetPosition;
+
+        transform.position = Vector3.Lerp(transform.position, initialPosition, transitionDelta);
+        transform.rotation = Quaternion.Lerp(transform.rotation, initialRotation, transitionDelta);
     }
 
-    public void beginTransition(Vector3 initialPos)
+    public void beginTransition(Vector3 initialPos, Quaternion initialRot)
     {
         transitionDelta = 1.0f;
         initialPosition = initialPos;
+        initialRotation = initialRot;
         transitionSpeed = transitionMult * Vector3.Distance(target.transform.position - (customOffset.x *
             target.transform.forward), initialPos);
     }

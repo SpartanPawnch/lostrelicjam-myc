@@ -11,8 +11,10 @@ public class GameState : MonoBehaviour
     [SerializeField] private Camera topdownCamera;
 
     private Vector3 respawnLocation;
+    private Quaternion respawnRotation;
     private CameraFollow thirdPersonAccessor;
     private AudioSource topdownSound;
+    private CameraTopdown topdownControls;
 
     public void Start()
     {
@@ -20,8 +22,10 @@ public class GameState : MonoBehaviour
         thirdPersonCamera.enabled = false;
         topdownCamera.enabled = true;
         respawnLocation = initialSpawnLocation.transform.position;
+        respawnRotation = character.transform.rotation;
         thirdPersonAccessor = thirdPersonCamera.GetComponent<CameraFollow>();
         topdownSound = topdownCamera.GetComponent<AudioSource>();
+        topdownControls = topdownCamera.GetComponent<CameraTopdown>();
     }
 
     public void Update()
@@ -40,6 +44,7 @@ public class GameState : MonoBehaviour
         if (inTopdown)
         {
             character.SetActive(false);
+            topdownControls.enabled = true;
             thirdPersonCamera.enabled = false;
             topdownCamera.enabled = true;
             topdownSound.UnPause();
@@ -47,13 +52,16 @@ public class GameState : MonoBehaviour
         else
         {
             character.SetActive(true);
+            //lock topdown view
+            topdownControls.enabled = false;
             //change active camera
             thirdPersonCamera.enabled = true;
             //setup camera transition
-            Vector3 initialPos = topdownCamera.transform.position;//character.transform.InverseTransformPoint(topdownCamera.transform.position);
-            thirdPersonAccessor?.beginTransition(initialPos);
+            Vector3 initialPos = topdownCamera.transform.position;
+            thirdPersonAccessor?.beginTransition(initialPos, topdownCamera.transform.rotation);
             topdownCamera.enabled = false;
             character.transform.position = respawnLocation;
+            character.transform.rotation = respawnRotation;
             topdownSound.Pause();
 
         }
