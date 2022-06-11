@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inTopdown: 1
   character: {fileID: 2082356890}
-  spawnLocation: {fileID: 449541966}
+  initialSpawnLocation: {fileID: 449541966}
   thirdPersonCamera: {fileID: 2072152264}
   topdownCamera: {fileID: 1238612997}
 --- !u!4 &208836273
@@ -308,6 +308,7 @@ GameObject:
   - component: {fileID: 1238613000}
   - component: {fileID: 1238612997}
   - component: {fileID: 1238612999}
+  - component: {fileID: 1238613001}
   m_Layer: 0
   m_Name: TopdownCamera
   m_TagString: Untagged
@@ -374,13 +375,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1238612996}
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: -8.23, y: 36.37, z: -2.61}
+  m_LocalPosition: {x: -27.19, y: 63.19, z: -21.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 45, y: 45, z: 0}
+--- !u!114 &1238613001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238612996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 314f252d627270a4fa5dcbee1b5ec007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camSpeed: 15
 --- !u!1 &1386836862
 GameObject:
   m_ObjectHideFlags: 0

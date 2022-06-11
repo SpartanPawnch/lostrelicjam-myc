@@ -6,15 +6,18 @@ public class GameState : MonoBehaviour
 
     [SerializeField] private GameObject character;
 
-    [SerializeField] private GameObject spawnLocation;
+    [SerializeField] private GameObject initialSpawnLocation;
     [SerializeField] private Camera thirdPersonCamera;
     [SerializeField] private Camera topdownCamera;
+
+    private Vector3 respawnLocation;
 
     public void Start()
     {
         character.SetActive(false);
         thirdPersonCamera.enabled = false;
         topdownCamera.enabled = true;
+        respawnLocation = initialSpawnLocation.transform.position;
     }
 
     public void Update()
@@ -41,7 +44,12 @@ public class GameState : MonoBehaviour
             character.SetActive(true);
             thirdPersonCamera.enabled = true;
             topdownCamera.enabled = false;
-            character.transform.position = spawnLocation.transform.position;
+            character.transform.position = respawnLocation;
         }
+    }
+
+    public void setRespawnLoc(Vector3 location)
+    {
+        respawnLocation = location;
     }
 }
