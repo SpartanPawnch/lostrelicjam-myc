@@ -11,6 +11,8 @@ public class GameState : MonoBehaviour
     [SerializeField] private GameObject initialSpawnLocation;
     [SerializeField] private Camera thirdPersonCamera;
     [SerializeField] private Camera topdownCamera;
+    
+    [SerializeField] private MusicController musicController;
 
     private Vector3 respawnLocation;
     private Quaternion respawnRotation;
@@ -27,6 +29,7 @@ public class GameState : MonoBehaviour
     private State state = State.Normal;
     private float respawnProgress = 0.0F;
     private RespawnTransition respawnTransition;
+
     
     public void Start()
     {
@@ -54,11 +57,11 @@ public class GameState : MonoBehaviour
             {
                 respawnTransition.enabled = true;
             }
-            else if (respawnProgress < 0.4F)
+            else if (respawnProgress < 0.35F)
             {
-                respawnTransition.Completion = respawnProgress / 0.4F;
+                respawnTransition.Completion = respawnProgress / 0.35F;
             }
-            else if (respawnProgress >= 0.4F && respawnProgress <= 0.6F)
+            else if (respawnProgress >= 0.35F && respawnProgress <= 0.6F)
             {
                 character.transform.position = respawnLocation;
                 // set position
@@ -74,12 +77,13 @@ public class GameState : MonoBehaviour
             }
             
 
-            respawnProgress += Time.deltaTime * 0.5F;
+            respawnProgress += Time.deltaTime / 4.0F;
         }
     }
 
     public void TriggerRespawn()
     {
+        musicController.OnRespawn();
         state = State.Respawning;
         respawnProgress = 0.0F;
     }

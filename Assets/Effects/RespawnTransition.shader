@@ -3,6 +3,8 @@ Shader "Hidden/RespawnTransition"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _Completion ("Completion", Float) = 0.0
+        _Ratio("Ratio", Float) = 0.0
     }
     SubShader
     {
@@ -16,6 +18,7 @@ Shader "Hidden/RespawnTransition"
             #pragma fragment frag
 
             #include "utility.cginc"
+            #include "effects.cginc"
 
             struct appdata
             {
@@ -39,11 +42,15 @@ Shader "Hidden/RespawnTransition"
 
             sampler2D _MainTex;
             float _Completion;
+            float _Ratio;
 
             fixed4 frag (v2f i) : SV_Target
             {
+                fixed4 waves_eff = waves(i.uv, _Ratio, float2(0.1, 0.0));
+                fixed4 ez = ezbhan(i.uv + 0.1F * waves_eff.xy, _Ratio);
+                
                 fixed4 col = tex2D(_MainTex, i.uv);
-                return blend_overwrite(col, fixed4(0., 0., 0., 0.), _Completion);
+                return blend_overwrite(col, ez, _Completion);
             }
             ENDCG
         }

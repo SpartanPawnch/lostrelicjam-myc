@@ -9,6 +9,7 @@ public class RespawnTransition : MonoBehaviour
     {
         var sheet = new Material(Shader.Find("Hidden/RespawnTransition"));
         sheet.SetFloat("_Completion", Completion);
+        sheet.SetFloat("_Ratio", (float)source.width / (float)source.height);
         Graphics.Blit(source, output, sheet);
     }
 }
