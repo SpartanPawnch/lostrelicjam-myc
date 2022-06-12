@@ -11,7 +11,7 @@ public class GameState : MonoBehaviour
     [SerializeField] private GameObject initialSpawnLocation;
     [SerializeField] private Camera thirdPersonCamera;
     [SerializeField] private Camera topdownCamera;
-    
+
     [SerializeField] private MusicController musicController;
 
     private Vector3 respawnLocation;
@@ -30,25 +30,24 @@ public class GameState : MonoBehaviour
     private float respawnProgress = 0.0F;
     private RespawnTransition respawnTransition;
 
-    
+
     public void Start()
     {
         MushroomsHeld = 0;
-        character.SetActive(false);
-        thirdPersonCamera.enabled = false;
-        topdownCamera.enabled = true;
-        respawnLocation = initialSpawnLocation.transform.position;
-        respawnRotation = character.transform.rotation;
-        thirdPersonAccessor = thirdPersonCamera.GetComponent<CameraFollow>();
-        topdownSound = topdownCamera.GetComponent<AudioSource>();
-        topdownControls = topdownCamera.GetComponent<CameraTopdown>();
-        respawnTransition = thirdPersonCamera.GetComponent<RespawnTransition>();
+        // character.SetActive(false);
+        // thirdPersonCamera.enabled = false;
+        // topdownCamera.enabled = true;
+        // respawnLocation = initialSpawnLocation.transform.position;
+        // respawnRotation = character.transform.rotation;
+        // thirdPersonAccessor = thirdPersonCamera.GetComponent<CameraFollow>();
+        //topdownSound = topdownCamera.GetComponent<AudioSource>();
+        //topdownControls = topdownCamera.GetComponent<CameraTopdown>();
     }
 
     public void Update()
     {
-        if (Input.GetButtonDown("Swap"))
-            switchPerspective();
+        // if (Input.GetButtonDown("Swap"))
+        //     switchPerspective();
 
         if (state == State.Respawning)
         {
@@ -75,7 +74,7 @@ public class GameState : MonoBehaviour
                 respawnTransition.enabled = false;
                 state = State.Normal;
             }
-            
+
 
             respawnProgress += Time.deltaTime / 4.0F;
         }
@@ -87,7 +86,7 @@ public class GameState : MonoBehaviour
         state = State.Respawning;
         respawnProgress = 0.0F;
     }
-    
+
     public void switchPerspective()
     {
 
@@ -97,16 +96,16 @@ public class GameState : MonoBehaviour
         if (inTopdown)
         {
             character.SetActive(false);
-            topdownControls.enabled = true;
+            //topdownControls.enabled = true;
             thirdPersonCamera.enabled = false;
             topdownCamera.enabled = true;
-            topdownSound.UnPause();
+            //topdownSound.UnPause();
         }
         else
         {
             character.SetActive(true);
             //lock topdown view
-            topdownControls.enabled = false;
+            //topdownControls.enabled = false;
             //change active camera
             thirdPersonCamera.enabled = true;
             //setup camera transition
@@ -115,7 +114,7 @@ public class GameState : MonoBehaviour
             topdownCamera.enabled = false;
             character.transform.position = respawnLocation;
             character.transform.rotation = respawnRotation;
-            topdownSound.Pause();
+            //topdownSound.Pause();
 
         }
     }

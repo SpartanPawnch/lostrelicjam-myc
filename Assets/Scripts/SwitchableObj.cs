@@ -10,12 +10,15 @@ public class SwitchableObj : MonoBehaviour
     [SerializeField] private GameObject character;
     [SerializeField] private GameState gameState;
     private bool use3d = false;
+    private Shroom shroom;
 
     // Start is called before the first frame update
     void Start()
     {
         mesh3d.enabled = use3d;
         sprite2d.enabled = !use3d;
+
+        shroom = GetComponent<Shroom>();
     }
 
     // Update is called once per frame
@@ -38,9 +41,10 @@ public class SwitchableObj : MonoBehaviour
     {
         if (collider.gameObject == character)
         {
-            gameState.TriggerRespawn();
             gameState.MushroomsHeld++;
-            GameObject.Destroy(this.gameObject);
+            gameObject.SetActive(false);
+            if (shroom)
+                shroom.enabled = false;
         }
     }
 }
