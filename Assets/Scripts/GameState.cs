@@ -18,6 +18,16 @@ public class GameState : MonoBehaviour
     private AudioSource topdownSound;
     private CameraTopdown topdownControls;
 
+    private enum State
+    {
+        Normal,
+        Respawning
+    };
+
+    private State state = State.Normal;
+    private float respawnProgress = 0.0F;
+    private RespawnTransition respawnTransition;
+    
     public void Start()
     {
         MushroomsHeld = 0;
@@ -29,15 +39,51 @@ public class GameState : MonoBehaviour
         thirdPersonAccessor = thirdPersonCamera.GetComponent<CameraFollow>();
         topdownSound = topdownCamera.GetComponent<AudioSource>();
         topdownControls = topdownCamera.GetComponent<CameraTopdown>();
+        respawnTransition = thirdPersonCamera.GetComponent<RespawnTransition>();
     }
 
     public void Update()
     {
         if (Input.GetButtonDown("Swap"))
             switchPerspective();
+
+        if (state == State.Respawning)
+        {
+
+            if (respawnProgress == 0.0F)
+            {
+                respawnTransition.enabled = true;
+            }
+            else if (respawnProgress < 0.4F)
+            {
+                respawnTransition.Completion = respawnProgress / 0.4F;
+            }
+            else if (respawnProgress >= 0.4F && respawnProgress <= 0.6F)
+            {
+                character.transform.position = respawnLocation;
+                // set position
+            }
+            else if (respawnProgress <= 1.0F)
+            {
+                respawnTransition.Completion = 1.0F - (respawnProgress - 0.6F) / 0.4F;
+            }
+            else
+            {
+                respawnTransition.enabled = false;
+                state = State.Normal;
+            }
+            
+
+            respawnProgress += Time.deltaTime * 0.5F;
+        }
     }
 
-
+    public void TriggerRespawn()
+    {
+        state = State.Respawning;
+        respawnProgress = 0.0F;
+    }
+    
     public void switchPerspective()
     {
 

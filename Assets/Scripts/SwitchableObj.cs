@@ -38,6 +38,7 @@ public class SwitchableObj : MonoBehaviour
     {
         if (collider.gameObject == character)
         {
+            gameState.TriggerRespawn();
             gameState.MushroomsHeld++;
             GameObject.Destroy(this.gameObject);
         }
