@@ -41,6 +41,7 @@ public class SwitchableObj : MonoBehaviour
     {
         if (collider.gameObject == character)
         {
+            gameState.TriggerRespawn();
             gameState.MushroomsHeld++;
             gameObject.SetActive(false);
             if (shroom)

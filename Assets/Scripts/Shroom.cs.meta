@@ -3,7 +3,10 @@ guid: 0fcef528bfe3b4bd5994a6f120bd4f5f
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - mainChar: {fileID: 7441096199517719741, guid: 49dd4be7bd59e4a45a46424be932c39b, type: 3}
+  - effectStackController: {instanceID: 0}
+  - musicController: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

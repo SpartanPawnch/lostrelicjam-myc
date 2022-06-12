@@ -34,11 +34,12 @@ public class GameState : MonoBehaviour
     public void Start()
     {
         MushroomsHeld = 0;
+        respawnTransition = thirdPersonCamera.GetComponent<RespawnTransition>();
         // character.SetActive(false);
         // thirdPersonCamera.enabled = false;
         // topdownCamera.enabled = true;
-        // respawnLocation = initialSpawnLocation.transform.position;
-        // respawnRotation = character.transform.rotation;
+        respawnLocation = initialSpawnLocation.transform.position;
+        respawnRotation = character.transform.rotation;
         // thirdPersonAccessor = thirdPersonCamera.GetComponent<CameraFollow>();
         //topdownSound = topdownCamera.GetComponent<AudioSource>();
         //topdownControls = topdownCamera.GetComponent<CameraTopdown>();
