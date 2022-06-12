@@ -200,4 +200,74 @@ fixed4 cube(float2 u, float ratio)
     return o;
 }
 
+
+/* LSD smoke */
+// source: https://www.shadertoy.com/view/ldBSRd
+
+#define lsd_smoke__PI 3.14159
+
+float2 lsd_smoke__random2(float2 c) { float j = 4906.0*sin(dot(c,float2(169.7, 5.8))); float2 r; r.x = frac(512.0*j); j *= .125; r.y = frac(512.0*j);return r-0.5;}
+
+const float lsd_smoke__F2 =  0.3660254;
+const float lsd_smoke__G2 = -0.2113249;
+
+float lsd_smoke__simplex2d(float2 p){float2 s = floor(p + (p.x+p.y)*lsd_smoke__F2),x = p - s - (s.x+s.y)*lsd_smoke__G2; float e = step(0.0, x.x-x.y); float2 i1 = float2(e, 1.0-e),  x1 = x - i1 - lsd_smoke__G2, x2 = x - 1.0 - 2.0*lsd_smoke__G2; float3 w, d; w.x = dot(x, x); w.y = dot(x1, x1); w.z = dot(x2, x2); w = max(0.5 - w, 0.0); d.x = dot(lsd_smoke__random2(s + 0.0), x); d.y = dot(lsd_smoke__random2(s +  i1), x1); d.z = dot(lsd_smoke__random2(s + 1.0), x2); w *= w; w *= w; d *= w; return dot(d, float3(70.0, 70.0, 70.0));}
+
+float3 lsd_smoke__rgb2yiq(float3 color){return mul(color, float3x3(0.299,0.587,0.114,0.596,-0.274,-0.321,0.211,-0.523,0.311));}
+float3 lsd_smoke__yiq2rgb(float3 color){return mul(color, float3x3(1.,0.956,0.621,1,-0.272,-0.647,1.,-1.107,1.705));}
+
+float3 lsd_smoke__convertRGB443quant(float3 color){ float3 out0 = fmod(color,1./16.); out0.b = fmod(color.b, 1./8.); return out0;}
+float3 lsd_smoke__convertRGB443(float3 color){return color-lsd_smoke__convertRGB443quant(color);}
+
+float2 lsd_smoke__sincos( float x ){return float2(sin(x), cos(x));}
+float2 lsd_smoke__rotate2d(float2 uv, float phi){float2 t = lsd_smoke__sincos(phi); return float2(uv.x*t.y-uv.y*t.x, uv.x*t.x+uv.y*t.y);}
+float3 lsd_smoke__rotate3d(float3 p, float3 v, float phi){ v = normalize(v); float2 t = lsd_smoke__sincos(-phi); float s = t.x, c = t.y, x =-v.x, y =-v.y, z =-v.z; float4x4 M = float4x4(x*x*(1.-c)+c,x*y*(1.-c)-z*s,x*z*(1.-c)+y*s,0.,y*x*(1.-c)+z*s,y*y*(1.-c)+c,y*z*(1.-c)-x*s,0.,z*x*(1.-c)-y*s,z*y*(1.-c)+x*s,z*z*(1.-c)+c,0.,0.,0.,0.,1.);return (mul(float4(p,1.), M)).xyz;}
+
+float lsd_smoke__varazslat(float2 position, float time){
+	float color = 0.0;
+	float t = 2.*time;
+	color += sin(position.x*cos(t/10.0)*20.0 )+cos(position.x*cos(t/15.)*10.0 );
+	color += sin(position.y*sin(t/ 5.0)*15.0 )+cos(position.x*sin(t/25.)*20.0 );
+	color += sin(position.x*sin(t/10.0)*  .2 )+sin(position.y*sin(t/35.)*10.);
+	color *= sin(t/10.)*.5;
+	
+	return color;
+}
+
+fixed4 lsd_smoke(float2 uv, float ratio)
+{
+    uv = (uv-.5)*2.;
+   
+    float3 vlsd = float3(0,1,0);
+    vlsd = lsd_smoke__rotate3d(vlsd, float3(1.,1.,0.), _Time.y);
+    vlsd = lsd_smoke__rotate3d(vlsd, float3(1.,1.,0.), _Time.y);
+    vlsd = lsd_smoke__rotate3d(vlsd, float3(1.,1.,0.), _Time.y);
+    
+    float2 
+        v0 = .75 * lsd_smoke__sincos(.3457 * _Time.y + .3423) - lsd_smoke__simplex2d(uv * .917),
+        v1 = .75 * lsd_smoke__sincos(.7435 * _Time.y + .4565) - lsd_smoke__simplex2d(uv * .521), 
+        v2 = .75 * lsd_smoke__sincos(.5345 * _Time.y + .3434) - lsd_smoke__simplex2d(uv * .759);
+    
+    float3 color = float3(dot(uv-v0, vlsd.xy),dot(uv-v1, vlsd.yz),dot(uv-v2, vlsd.zx));
+    
+    color *= .2 + 2.5*float3(
+    	(16.*lsd_smoke__simplex2d(uv+v0) + 8.*lsd_smoke__simplex2d((uv+v0)*2.) + 4.*lsd_smoke__simplex2d((uv+v0)*4.) + 2.*lsd_smoke__simplex2d((uv+v0)*8.) + lsd_smoke__simplex2d((v0+uv)*16.))/32.,
+        (16.*lsd_smoke__simplex2d(uv+v1) + 8.*lsd_smoke__simplex2d((uv+v1)*2.) + 4.*lsd_smoke__simplex2d((uv+v1)*4.) + 2.*lsd_smoke__simplex2d((uv+v1)*8.) + lsd_smoke__simplex2d((v1+uv)*16.))/32.,
+        (16.*lsd_smoke__simplex2d(uv+v2) + 8.*lsd_smoke__simplex2d((uv+v2)*2.) + 4.*lsd_smoke__simplex2d((uv+v2)*4.) + 2.*lsd_smoke__simplex2d((uv+v2)*8.) + lsd_smoke__simplex2d((v2+uv)*16.))/32.
+    );
+    
+    color = lsd_smoke__yiq2rgb(color);
+    
+    color *= 1.- .25* float3(
+    	lsd_smoke__varazslat(uv *.25, _Time.y + .5),
+        lsd_smoke__varazslat(uv * .7, _Time.y + .2),
+        lsd_smoke__varazslat(uv * .4, _Time.y + .7)
+    );
+    
+    
+    color = float3(pow(color.r, 0.45), pow(color.g, 0.45), pow(color.b, 0.45));
+
+    return fixed4(color, 1.0);
+}
+
 #endif
