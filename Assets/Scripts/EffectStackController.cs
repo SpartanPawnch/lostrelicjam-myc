@@ -7,7 +7,8 @@ public class EffectStackController : MonoBehaviour
     private Ezbhan ezbhan;
     private LSDChromaticwheel lsdChromaticWheel;
     private ChromaticWaves chromaticWaves;
-
+    private PsychedelicPattern psychedelicPattern;
+    
     public MushroomAreas MushroomArea;
     [Range(0,1)] public float Intensity;
 
@@ -18,7 +19,7 @@ public class EffectStackController : MonoBehaviour
         ezbhan = GetComponent<Ezbhan>();
         lsdChromaticWheel = GetComponent<LSDChromaticwheel>();
         chromaticWaves = GetComponent<ChromaticWaves>();
-        
+        psychedelicPattern = GetComponent<PsychedelicPattern>();
     }
 
     // Update is called once per frame
@@ -30,11 +31,14 @@ public class EffectStackController : MonoBehaviour
                 ezbhan.enabled = false;
                 lsdChromaticWheel.enabled = false;
                 chromaticWaves.enabled = false;
+                psychedelicPattern.enabled = false;
                 break;
             case MushroomAreas.Mushroom2:
                 ezbhan.enabled = true;
                 lsdChromaticWheel.enabled = false;
                 chromaticWaves.enabled = false;
+                psychedelicPattern.enabled = false;
+
 
                 ezbhan.EffectOpacity = Intensity * 1f;
                 ezbhan.Displacement = 0.001f + (Intensity * 0.01f);
@@ -43,6 +47,7 @@ public class EffectStackController : MonoBehaviour
                 ezbhan.enabled = false;
                 lsdChromaticWheel.enabled = false;
                 chromaticWaves.enabled = true;
+                psychedelicPattern.enabled = false;
 
                 chromaticWaves.LightPos = new Vector2(
                     Intensity * 0.4f,
@@ -54,6 +59,15 @@ public class EffectStackController : MonoBehaviour
                 
                 break;
             case MushroomAreas.Mushroom4:
+                ezbhan.enabled = false;
+                lsdChromaticWheel.enabled = false;
+                chromaticWaves.enabled = false;
+                psychedelicPattern.enabled = true;
+
+                psychedelicPattern.Displacement = 0.002F;
+                psychedelicPattern.EffectOpacity =
+                    Mathf.Clamp(Intensity, 0.0F, 0.35F);
+                
                 break;
             case MushroomAreas.Mushroom5:
                 break;
