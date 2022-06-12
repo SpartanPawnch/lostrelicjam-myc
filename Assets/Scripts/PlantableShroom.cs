@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlantableShroom : MonoBehaviour
 {
+    [SerializeField] GameState gameState;
+
     [SerializeField] GameObject character;
     [SerializeField] GameObject ShroomModel;
     [SerializeField] MeshRenderer markerRenderer;
@@ -16,17 +18,14 @@ public class PlantableShroom : MonoBehaviour
         ShroomModel.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject == character)
+        if (collider.gameObject == character && gameState.MushroomsHeld > 0)
         {
+            gameState.MushroomsHeld--;
             markerRenderer.enabled = false;
+            // note: make sure child shroom's collider is inactive or removed so it can not be picked up
             ShroomModel.SetActive(true);
             planted = true;
         }
