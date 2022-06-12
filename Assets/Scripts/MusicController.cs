@@ -66,6 +66,12 @@ public class MusicController : MonoBehaviour
         changeTrack(MusicTracks.Spawn, MushroomAreas.None);
     }
 
+    public void OnRespawn()
+    {
+        audioSources[1].clip = Resources.Load("mycelium_2d_to_3d_real") as AudioClip;
+        audioSources[1].PlayOneShot(Resources.Load("mycelium_2d_to_3d_real") as AudioClip);
+    }
+    
     void Update()
     {
         if (changed)
