@@ -1315,3 +1315,4 @@ MonoBehaviour:
   effectRadius: 100
   player: {fileID: 1341592404}
   mushroomArea: 1
+  musicController: {fileID: 1161947363}

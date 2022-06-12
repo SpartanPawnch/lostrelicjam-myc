@@ -36,9 +36,8 @@ public class NoiseIntensifier : MonoBehaviour
             effectStackController.MushroomArea = MushroomAreas.None;
             
         }
-        else if (distance <= effectRadius) // play the high intensity music and shaders increasing in intensity as you get closer 
+        else if (distance >= nearRadius && distance <= effectRadius) // play the high intensity music and shaders increasing in intensity as you get closer 
         {
-            musicController.OnExitSpawn();
             musicController.OnEnterMushroomArea(mushroomArea);
 
             float effectPercentage = 1 - (distance - nearRadius) / (effectRadius - nearRadius);
