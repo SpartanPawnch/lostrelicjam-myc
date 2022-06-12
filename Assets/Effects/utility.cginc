@@ -208,6 +208,16 @@ float4 mix(float4 x, float4 y, float a)
     return x * (1 - a) + y * a;
 }
 
+float mix(float x, float y, float a)
+{
+    return x * (1 - a) + y * a;
+}
+
+float min(float a, float b, float c)
+{
+    return min(a, min(b, c));
+}
+
 /* helpers */
 
 float3 rgb2hsv(float3 c)

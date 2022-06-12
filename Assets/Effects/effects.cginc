@@ -125,4 +125,79 @@ fixed4 waves(float2 iuv, float ratio, float2 light_position)
     return fixed4(col, 1.0);
 }
 
+/* Psychedelic Pattern */
+// source: https://www.shadertoy.com/view/XlcBzH
+
+fixed4 psychedelic_pattern(float2 iuv, float ratio)
+{
+    float PI = 3.14159265358979323846264338327950;
+    float TWO_PI = PI * 2;
+    
+    ratio = 1. / ratio;
+    float2 suv = iuv;
+    suv.y = suv.y * ratio;
+    float2 sres = float2(1.0, ratio);
+    
+    float2 pos = (suv - .5 * sres) / sres.y;
+    float angle = atan2(pos.y, pos.x) / PI;
+    float arms = frac(angle * 3.0);
+    arms = abs(arms - 0.5) * 2.0;
+    
+    float dist = length(pos);
+    dist = mix(dist, pow(dist, 0.5), 1.0);
+    
+    dist -= _Time.y * 0.1;
+    
+    float green = sin((dist + arms * 0.5) * 20.0) * 0.5 + 0.5;
+    green += sin((dist - arms * 0.5 + sin(_Time.y * 0.4)) * 20.0);
+    green = clamp(green, 0.0, 1.0);
+    
+    float pink = sin((dist - arms * 0.5) * 15.0) * 0.5 + 0.5;
+    pink += sin((dist + arms * 0.5) * 15.0);
+    pink = clamp(pink, 0.0, 1.0);
+    
+    float3 color = float3(0.1, 0.05, 0.8);
+    
+    color = mix(color, float3(1.0, 0.2, 0.8), pink);
+    color = mix(color, float3(0.2, 1.0, 0.05), green);
+    
+    color = rgb2hsv(color);
+    color.r += sin(_Time.y * 0.3);
+    color = hsv2rgb(color);
+
+    return fixed4(color, 1.0);
+}
+
+/* Cube */
+// source: https://www.shadertoy.com/view/Xs33RH
+
+#define cube__L(u,a,b) l=dot(w=u-a,v=b-a)/(m=length(v)), l>.0&&l<m ? o += 3e-3/sqrt(dot(w,w)-l*l) :o;
+#define cube__P(A,B) cube__L(u,A.xy/(4.+A.z),B.xy/(4.+B.z));
+
+fixed4 cube(float2 u, float ratio)
+{
+    float4 o;
+    o-=o;
+
+    ratio = 1. / ratio;
+    float2 suv = u;
+    suv.y = suv.y * ratio;
+    float2 sres = float2(1.0, ratio);
+    
+    u = 2. * suv / sres.y - float2(1.8,1); 
+    
+    float t=_Time.y, S=-sin(t),C=cos(t),l,m;
+    float2 v,w;
+
+    float3 i=float3(C,0,S),j=float3(0,1,0),k=float3(-S,0,C),
+         a =  i+j+k, b =  i+j-k, c =  i-j-k, d =  i-j+k,
+         e = -i+j+k, f = -i+j-k, g = -i-j-k, h = -i-j+k;
+
+    cube__P(a,b) cube__P(b,c) cube__P(c,d) cube__P(d,a)
+    cube__P(e,f) cube__P(f,g) cube__P(g,h) cube__P(h,e)
+    cube__P(a,e) cube__P(b,f) cube__P(c,g) cube__P(d,h)
+
+    return o;
+}
+
 #endif
