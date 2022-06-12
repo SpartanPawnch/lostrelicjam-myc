@@ -4,6 +4,8 @@ public class GameState : MonoBehaviour
 {
     public bool inTopdown = true;
 
+    public uint MushroomsHeld { get; set; } // for collecting and planting
+
     [SerializeField] private GameObject character;
 
     [SerializeField] private GameObject initialSpawnLocation;
@@ -18,6 +20,7 @@ public class GameState : MonoBehaviour
 
     public void Start()
     {
+        MushroomsHeld = 0;
         character.SetActive(false);
         thirdPersonCamera.enabled = false;
         topdownCamera.enabled = true;
