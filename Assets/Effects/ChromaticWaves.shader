@@ -3,6 +3,7 @@ Shader "Hidden/ChromaticWaves"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _EffectOpacity ("Effect Opacity", Float) = 1.0
         _Displacement ("Displacement", Float) = 0.05
         _LightPos ("Light Position", Vector) = (1.0, 1.0, 0.0, 0.0) 
         _Ratio ("Ratio", Float) = 1.0
@@ -46,6 +47,7 @@ Shader "Hidden/ChromaticWaves"
             float4 _LightPos;
             float _Displacement;
             float _Ratio;
+            float _EffectOpacity;
 
             fixed4 frag (v2f i) : SV_Target
             {
@@ -56,7 +58,7 @@ Shader "Hidden/ChromaticWaves"
                 col.x = col.x + length(eff);
                 col.xyz = hsv2rgb(col);
                 
-                return col;
+                return blend_overwrite(tex2D(_MainTex, i.uv), col, _EffectOpacity);
             }
             ENDCG
         }

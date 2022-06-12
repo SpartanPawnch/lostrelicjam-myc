@@ -40,6 +40,18 @@ public class EffectStackController : MonoBehaviour
                 ezbhan.Displacement = 0.001f + (Intensity * 0.01f);
                 break;
             case MushroomAreas.Mushroom3:
+                ezbhan.enabled = false;
+                lsdChromaticWheel.enabled = false;
+                chromaticWaves.enabled = true;
+
+                chromaticWaves.LightPos = new Vector2(
+                    Intensity * 0.4f,
+                    Intensity * 0.4f
+                );
+            
+                chromaticWaves.Displacement = Intensity * 0.05F;
+                chromaticWaves.EffectOpacity = Mathf.Clamp(Intensity * 10.0F, 0.0F, 1.0F);
+                
                 break;
             case MushroomAreas.Mushroom4:
                 break;
