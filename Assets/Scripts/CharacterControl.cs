@@ -21,11 +21,13 @@ public class CharacterControl : MonoBehaviour
         float horizontalAxis = Input.GetAxis("Horizontal");
         float verticalAxis = Input.GetAxis("Vertical");
 
+        Vector2 horizontalVelocity = new Vector2(activeRigidbody.velocity.x, activeRigidbody.velocity.z);
+
         //apply drag
         if (verticalAxis == 0)
         {
-            activeRigidbody.velocity = Vector3.ClampMagnitude(activeRigidbody.velocity,
-                activeRigidbody.velocity.magnitude - drag * Time.deltaTime);   
+            horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity,
+                horizontalVelocity.magnitude - drag * Time.deltaTime);
         }
 
         //rotate playeer
@@ -33,9 +35,11 @@ public class CharacterControl : MonoBehaviour
 
         //apply accelleration
 
-        activeRigidbody.velocity += acceleration * transform.forward * verticalAxis * Time.deltaTime;
-
-        activeRigidbody.velocity = Vector3.ClampMagnitude(activeRigidbody.velocity, maxVelocity);
+        float velocityMult = acceleration * verticalAxis * Time.deltaTime;
+        Vector2 forwardVec = new Vector2(transform.forward.x, transform.forward.z);
+        horizontalVelocity += velocityMult * forwardVec;
+        horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, maxVelocity);
+        activeRigidbody.velocity = new Vector3(horizontalVelocity.x, activeRigidbody.velocity.y, horizontalVelocity.y);
 
 
 
