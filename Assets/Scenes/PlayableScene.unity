@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1445,6 +1445,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 522172715}
+  - component: {fileID: 522172716}
   m_Layer: 0
   m_Name: RespawnLoc
   m_TagString: Untagged
@@ -1467,6 +1468,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &522172716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522172714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee58f4e15ec664d5081c263ebf82d3bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainChar: {fileID: 442704522}
+  effectStackController: {fileID: 2072152269}
+  musicController: {fileID: 1161947363}
+  radius: 50
 --- !u!1001 &529028606
 PrefabInstance:
   m_ObjectHideFlags: 0
