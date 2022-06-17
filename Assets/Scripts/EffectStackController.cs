@@ -28,6 +28,8 @@ public class EffectStackController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float remappedIntensity = Mathf.Clamp(Intensity * 3.0F, 0.0F, 1.0F);
+
         switch (MushroomArea)
         {
             case MushroomAreas.None:
@@ -44,8 +46,8 @@ public class EffectStackController : MonoBehaviour
                 psychedelicPattern.enabled = false;
                 lsdSmoke.enabled = false;
 
-                ezbhan.EffectOpacity = Intensity * 1f;
-                ezbhan.Displacement = 0.001f + (Intensity * 0.01f);
+                ezbhan.EffectOpacity = remappedIntensity * 1f;
+                ezbhan.Displacement = 0.001f + (remappedIntensity * 0.01f);
                 break;
             case MushroomAreas.Mushroom3:
                 ezbhan.enabled = false;
@@ -55,12 +57,12 @@ public class EffectStackController : MonoBehaviour
                 lsdSmoke.enabled = false;
 
                 chromaticWaves.LightPos = new Vector2(
-                    Intensity * 0.4f,
-                    Intensity * 0.4f
+                    remappedIntensity * 0.4f,
+                    remappedIntensity * 0.4f
                 );
             
-                chromaticWaves.Displacement = Intensity * 0.05F;
-                chromaticWaves.EffectOpacity = Mathf.Clamp(Intensity * 10.0F, 0.0F, 1.0F);
+                chromaticWaves.Displacement = remappedIntensity * 0.05F;
+                chromaticWaves.EffectOpacity = Mathf.Clamp(remappedIntensity * 10.0F, 0.0F, 1.0F);
                 
                 break;
             case MushroomAreas.Mushroom4:
@@ -72,7 +74,7 @@ public class EffectStackController : MonoBehaviour
 
                 psychedelicPattern.Displacement = 0.002F;
                 psychedelicPattern.EffectOpacity =
-                    Mathf.Clamp(Intensity, 0.0F, 0.35F);
+                    Mathf.Clamp(remappedIntensity, 0.0F, 0.35F);
                 
                 break;
             case MushroomAreas.Mushroom5:
@@ -82,8 +84,8 @@ public class EffectStackController : MonoBehaviour
                 psychedelicPattern.enabled = false;
                 lsdSmoke.enabled = true;
 
-                lsdSmoke.Displacement = Mathf.Clamp(Intensity * 10, 0.0F, 1.0F);
-                lsdSmoke.EffectOpacity = Mathf.Clamp(Intensity * 10, 0.0F, 1.0F) * 0.4F;
+                lsdSmoke.Displacement = Mathf.Clamp(remappedIntensity * 10, 0.0F, 1.0F);
+                lsdSmoke.EffectOpacity = Mathf.Clamp(remappedIntensity * 10, 0.0F, 1.0F) * 0.4F;
                 
                 break;
         }
