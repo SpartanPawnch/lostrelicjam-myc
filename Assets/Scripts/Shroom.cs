@@ -47,4 +47,11 @@ public class Shroom : MonoBehaviour
             effectStackController.MushroomArea = MushroomAreas.None;
         }
     }
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, nearRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, effectRadius);
+    }
 }
