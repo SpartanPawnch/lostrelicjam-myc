@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1118,6 +1118,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7441096199517719716, guid: 49dd4be7bd59e4a45a46424be932c39b, type: 3}
+      propertyPath: drag
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7441096199517719716, guid: 49dd4be7bd59e4a45a46424be932c39b, type: 3}
+      propertyPath: maxVelocity
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 7441096199517719716, guid: 49dd4be7bd59e4a45a46424be932c39b, type: 3}
+      propertyPath: rotateSpeed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7441096199517719716, guid: 49dd4be7bd59e4a45a46424be932c39b, type: 3}
+      propertyPath: acceleration
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 7441096199517719718, guid: 49dd4be7bd59e4a45a46424be932c39b, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -5269,7 +5285,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 1000
-  field of view: 29.182138
+  field of view: 50.786972
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -5316,7 +5332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 442704522}
   transitionMult: 1
-  customOffset: {x: 20, y: 5}
+  customOffset: {x: 25, y: 4}
 --- !u!114 &2072152267
 MonoBehaviour:
   m_ObjectHideFlags: 0

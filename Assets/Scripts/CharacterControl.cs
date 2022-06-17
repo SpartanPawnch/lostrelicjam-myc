@@ -22,8 +22,11 @@ public class CharacterControl : MonoBehaviour
         float verticalAxis = Input.GetAxis("Vertical");
 
         //apply drag
-        activeRigidbody.velocity = Vector3.ClampMagnitude(activeRigidbody.velocity,
-            activeRigidbody.velocity.magnitude - drag * Time.deltaTime);
+        if (verticalAxis == 0)
+        {
+            activeRigidbody.velocity = Vector3.ClampMagnitude(activeRigidbody.velocity,
+                activeRigidbody.velocity.magnitude - drag * Time.deltaTime);   
+        }
 
         //rotate playeer
         transform.Rotate(new Vector3(0, horizontalAxis * rotateSpeed * Time.deltaTime, 0));
