@@ -9,25 +9,37 @@ public class PlantableShroom : MonoBehaviour
     [SerializeField] GameObject character;
     [SerializeField] GameObject ShroomModel;
     [SerializeField] MeshRenderer markerRenderer;
-    private bool planted;
+
+    private enum State
+    {
+        Inactive,
+        Planting,
+        Planted
+    }
+    private State state = State.Inactive;
     // Start is called before the first frame update
     void Start()
     {
-        planted = false;
-        markerRenderer.enabled = true;
+        state = State.Inactive;
+        markerRenderer.enabled = false;
         ShroomModel.SetActive(false);
     }
 
+    public void EnableSpot()
+    {
+        state = State.Planting;
+        markerRenderer.enabled = true;
+    }
 
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject == character && gameState.MushroomsHeld > 0)
+        if (state == State.Planting && collider.gameObject == character && gameState.MushroomsHeld > 0)
         {
             gameState.MushroomsHeld--;
             markerRenderer.enabled = false;
             // note: make sure child shroom's collider is inactive or removed so it can not be picked up
             ShroomModel.SetActive(true);
-            planted = true;
+            state = State.Planted;
         }
     }
 }

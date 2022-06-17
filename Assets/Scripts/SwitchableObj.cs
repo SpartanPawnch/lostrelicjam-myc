@@ -36,16 +36,19 @@ public class SwitchableObj : MonoBehaviour
         sprite2d.enabled = !use3d;
     }
 
+    public void DisableShroom()
+    {
+        gameObject.SetActive(false);
+        if (shroom)
+            shroom.enabled = false;
+    }
+
     // Collect the mushroom when the player makes contact
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject == character)
         {
-            gameState.TriggerRespawn();
-            gameState.MushroomsHeld++;
-            gameObject.SetActive(false);
-            if (shroom)
-                shroom.enabled = false;
+            gameState.OnCollectShroom(this);
         }
     }
 }

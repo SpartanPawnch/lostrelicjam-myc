@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Shroom
   - MainChar
+  - PlantableShroom
   layers:
   - Default
   - TransparentFX

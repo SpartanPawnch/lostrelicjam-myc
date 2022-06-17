@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 public class GameState : MonoBehaviour
 {
@@ -30,6 +32,8 @@ public class GameState : MonoBehaviour
     private float respawnProgress = 0.0F;
     private RespawnTransition respawnTransition;
 
+    private List<PlantableShroom> plantableShrooms = new List<PlantableShroom>();
+
 
     public void Start()
     {
@@ -43,6 +47,13 @@ public class GameState : MonoBehaviour
         // thirdPersonAccessor = thirdPersonCamera.GetComponent<CameraFollow>();
         //topdownSound = topdownCamera.GetComponent<AudioSource>();
         //topdownControls = topdownCamera.GetComponent<CameraTopdown>();
+
+        foreach (var obj in GameObject.FindGameObjectsWithTag("PlantableShroom"))
+        {
+            plantableShrooms.Add(obj.GetComponent<PlantableShroom>());
+        }
+
+        Debug.Log(plantableShrooms);
     }
 
     public void Update()
@@ -86,6 +97,23 @@ public class GameState : MonoBehaviour
         musicController.OnRespawn();
         state = State.Respawning;
         respawnProgress = 0.0F;
+    }
+
+    public void OnCollectShroom(SwitchableObj shroom)
+    {
+        if (MushroomsHeld != 0)
+            return;
+        
+        MushroomsHeld++;
+        shroom.DisableShroom();
+
+        Debug.Log("activating spot");
+        Debug.Log(plantableShrooms.First());
+        // choose PlantableShroom
+        plantableShrooms.First().EnableSpot();
+        plantableShrooms.RemoveAt(0);
+        
+        TriggerRespawn();
     }
 
     public void switchPerspective()
