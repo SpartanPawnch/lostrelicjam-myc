@@ -7,11 +7,12 @@ TagManager:
   - Shroom
   - MainChar
   - PlantableShroom
+  - Terrain
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Terrain
   - Water
   - UI
   - 
