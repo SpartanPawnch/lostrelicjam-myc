@@ -58,8 +58,6 @@ public class GameState : MonoBehaviour
 
     public void Update()
     {
-        // if (Input.GetButtonDown("Swap"))
-        //     switchPerspective();
 
         if (state == State.Respawning)
         {
@@ -99,55 +97,24 @@ public class GameState : MonoBehaviour
         respawnProgress = 0.0F;
     }
 
-    public void OnCollectShroom(SwitchableObj shroom)
+    public void OnCollectShroom(Shroom shroom)
     {
         if (MushroomsHeld != 0)
             return;
-        
+
         MushroomsHeld++;
-        shroom.DisableShroom();
+
+        shroom.gameObject.SetActive(false);
+        shroom.enabled = false;
 
         Debug.Log("activating spot");
         Debug.Log(plantableShrooms.First());
         // choose PlantableShroom
         plantableShrooms.First().EnableSpot();
         plantableShrooms.RemoveAt(0);
-        
+
         TriggerRespawn();
     }
-
-    public void switchPerspective()
-    {
-
-        //change display
-        inTopdown = !inTopdown;
-
-        if (inTopdown)
-        {
-            character.SetActive(false);
-            //topdownControls.enabled = true;
-            thirdPersonCamera.enabled = false;
-            topdownCamera.enabled = true;
-            //topdownSound.UnPause();
-        }
-        else
-        {
-            character.SetActive(true);
-            //lock topdown view
-            //topdownControls.enabled = false;
-            //change active camera
-            thirdPersonCamera.enabled = true;
-            //setup camera transition
-            Vector3 initialPos = topdownCamera.transform.position;
-            thirdPersonAccessor?.beginTransition(initialPos, topdownCamera.transform.rotation);
-            topdownCamera.enabled = false;
-            character.transform.position = respawnLocation;
-            character.transform.rotation = respawnRotation;
-            //topdownSound.Pause();
-
-        }
-    }
-
     public void setRespawnLoc(Vector3 location)
     {
         respawnLocation = location;

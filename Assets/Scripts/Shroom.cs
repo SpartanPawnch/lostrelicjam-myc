@@ -5,6 +5,7 @@ using UnityEngine;
 public class Shroom : MonoBehaviour
 {
     [SerializeField] private GameObject mainChar;
+    [SerializeField] private GameState gameState;
     [SerializeField] private EffectStackController effectStackController;
     [SerializeField] private float nearRadius;
     [SerializeField] private float effectRadius;
@@ -53,5 +54,13 @@ public class Shroom : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, nearRadius);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, effectRadius);
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject == mainChar)
+        {
+            gameState.OnCollectShroom(this);
+        }
     }
 }

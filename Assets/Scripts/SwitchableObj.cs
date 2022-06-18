@@ -44,11 +44,11 @@ public class SwitchableObj : MonoBehaviour
     }
 
     // Collect the mushroom when the player makes contact
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.gameObject == character)
-        {
-            gameState.OnCollectShroom(this);
-        }
-    }
+    // private void OnTriggerEnter(Collider collider)
+    // {
+    //     if (collider.gameObject == character)
+    //     {
+    //         gameState.OnCollectShroom(this);
+    //     }
+    // }
 }
