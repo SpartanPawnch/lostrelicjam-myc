@@ -40,6 +40,7 @@ public class PlantableShroom : MonoBehaviour
             // note: make sure child shroom's collider is inactive or removed so it can not be picked up
             ShroomModel.SetActive(true);
             state = State.Planted;
+            gameState.plantedCount++;
         }
     }
 }

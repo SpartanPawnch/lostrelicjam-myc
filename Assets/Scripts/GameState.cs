@@ -34,26 +34,25 @@ public class GameState : MonoBehaviour
 
     private List<PlantableShroom> plantableShrooms = new List<PlantableShroom>();
 
+    [HideInInspector] public int plantedCount = 0;
+    [HideInInspector] public int plantedMax = 0;
 
     public void Start()
     {
         MushroomsHeld = 0;
         respawnTransition = thirdPersonCamera.GetComponent<RespawnTransition>();
-        // character.SetActive(false);
-        // thirdPersonCamera.enabled = false;
-        // topdownCamera.enabled = true;
         respawnLocation = initialSpawnLocation.transform.position;
         respawnRotation = character.transform.rotation;
-        // thirdPersonAccessor = thirdPersonCamera.GetComponent<CameraFollow>();
-        //topdownSound = topdownCamera.GetComponent<AudioSource>();
-        //topdownControls = topdownCamera.GetComponent<CameraTopdown>();
 
         foreach (var obj in GameObject.FindGameObjectsWithTag("PlantableShroom"))
         {
             plantableShrooms.Add(obj.GetComponent<PlantableShroom>());
         }
 
-        Debug.Log(plantableShrooms);
+        plantedCount = 0;
+        plantedMax = 0;
+
+        // Debug.Log(plantableShrooms);
     }
 
     public void Update()
@@ -107,8 +106,8 @@ public class GameState : MonoBehaviour
         shroom.gameObject.SetActive(false);
         shroom.enabled = false;
 
-        Debug.Log("activating spot");
-        Debug.Log(plantableShrooms.First());
+        // Debug.Log("activating spot");
+        // Debug.Log(plantableShrooms.First());
         // choose PlantableShroom
         plantableShrooms.First().EnableSpot();
         plantableShrooms.RemoveAt(0);
