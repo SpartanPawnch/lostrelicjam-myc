@@ -4,11 +4,16 @@ public class CharacterControl : MonoBehaviour
 {
 
     [SerializeField] private Rigidbody activeRigidbody;
-    [SerializeField] private float acceleration = 2.0f;
-    [SerializeField] private float maxVelocity = 10.0f;
+    [SerializeField] private float startingAcceleration = 10.0f;
+    [SerializeField] private float startingVelocity = 10.0f;
+    [SerializeField] private float acceleration = 25.0f;
+    [SerializeField] private float maxVelocity = 30.0f;
     [SerializeField] private float drag = .1f;
 
     [SerializeField] private float rotateSpeedX = 5;
+
+    private float activeAcceleration = 25.0f;
+    private float activeMaxSpeed = 30.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -37,15 +42,21 @@ public class CharacterControl : MonoBehaviour
 
         //apply accelleration
 
-        float velocityMult = acceleration * Time.deltaTime;
+        float velocityMult = activeAcceleration * Time.deltaTime;
         Vector2 forwardVec = new Vector2(transform.forward.x, transform.forward.z);
         Vector2 rightVec = new Vector2(transform.right.x, transform.right.z);
         horizontalVelocity += velocityMult * verticalAxis * forwardVec + velocityMult * horizontalAxis * rightVec;
-        horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, maxVelocity);
+        horizontalVelocity = Vector2.ClampMagnitude(horizontalVelocity, activeMaxSpeed);
         activeRigidbody.velocity = new Vector3(horizontalVelocity.x, activeRigidbody.velocity.y, horizontalVelocity.y);
 
 
 
+    }
+
+    public void ModifySpeed(float frac)
+    {
+        activeAcceleration = Mathf.Lerp(startingAcceleration, acceleration, frac);
+        activeMaxSpeed = Mathf.Lerp(startingVelocity, maxVelocity, frac);
     }
 
 }

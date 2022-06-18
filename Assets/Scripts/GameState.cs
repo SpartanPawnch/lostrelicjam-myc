@@ -9,6 +9,7 @@ public class GameState : MonoBehaviour
     public uint MushroomsHeld { get; set; } // for collecting and planting
 
     [SerializeField] private GameObject character;
+    private CharacterControl characterControl;
 
     [SerializeField] private GameObject initialSpawnLocation;
     [SerializeField] private Camera thirdPersonCamera;
@@ -39,6 +40,7 @@ public class GameState : MonoBehaviour
 
     public void Start()
     {
+        characterControl = character.GetComponent<CharacterControl>();
         MushroomsHeld = 0;
         respawnTransition = thirdPersonCamera.GetComponent<RespawnTransition>();
         respawnLocation = initialSpawnLocation.transform.position;
@@ -50,14 +52,13 @@ public class GameState : MonoBehaviour
         }
 
         plantedCount = 0;
-        plantedMax = 0;
+        plantedMax = plantableShrooms.Count;
 
         // Debug.Log(plantableShrooms);
     }
 
     public void Update()
     {
-
         if (state == State.Respawning)
         {
 
@@ -87,6 +88,8 @@ public class GameState : MonoBehaviour
 
             respawnProgress += Time.deltaTime / 4.0F;
         }
+
+        characterControl.ModifySpeed((float)plantedCount / plantedMax);
     }
 
     public void TriggerRespawn()
