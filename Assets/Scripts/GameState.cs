@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
+using UnityEngine.SceneManagement;
 public class GameState : MonoBehaviour
 {
     public bool inTopdown = true;
@@ -90,6 +91,9 @@ public class GameState : MonoBehaviour
         }
 
         characterControl.ModifySpeed((float)plantedCount / plantedMax);
+
+        if (Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void TriggerRespawn()
