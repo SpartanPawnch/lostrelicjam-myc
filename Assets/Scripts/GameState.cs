@@ -93,7 +93,10 @@ public class GameState : MonoBehaviour
         characterControl.ModifySpeed((float)plantedCount / plantedMax);
 
         if (Input.GetKeyDown(KeyCode.R))
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        {
+            Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadScene(0);
+        }
     }
 
     public void TriggerRespawn()
