@@ -116,10 +116,12 @@ public class GameState : MonoBehaviour
         shroom.gameObject.SetActive(false);
         shroom.enabled = false;
 
-        // Debug.Log("activating spot");
-        // Debug.Log(plantableShrooms.First());
         // choose PlantableShroom
         plantableShrooms.First().EnableSpot();
+		plantableShrooms.First().ShroomModel = shroom.gameObject.transform.GetChild(
+				shroom.gameObject.transform.childCount - 1
+			).gameObject;
+		plantableShrooms.First().ShroomModel.transform.parent = plantableShrooms.First().gameObject.transform;
         plantableShrooms.RemoveAt(0);
 
         TriggerRespawn();
