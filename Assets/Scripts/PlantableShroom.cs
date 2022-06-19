@@ -38,8 +38,11 @@ public class PlantableShroom : MonoBehaviour
             gameState.MushroomsHeld--;
             markerRenderer.enabled = false;
             // note: make sure child shroom's collider is inactive or removed so it can not be picked up
-            ShroomModel.transform.position = this.transform.position;
-			ShroomModel.SetActive(true);
+            Vector3 localOffset = ShroomModel.transform.localPosition;
+            ShroomModel.transform.parent = gameObject.transform;
+            //ShroomModel.transform.position = this.transform.position;
+            ShroomModel.transform.localPosition = localOffset;
+            ShroomModel.SetActive(true);
             state = State.Planted;
             gameState.plantedCount++;
         }

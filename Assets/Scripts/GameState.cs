@@ -118,10 +118,9 @@ public class GameState : MonoBehaviour
 
         // choose PlantableShroom
         plantableShrooms.First().EnableSpot();
-		plantableShrooms.First().ShroomModel = shroom.gameObject.transform.GetChild(
-				shroom.gameObject.transform.childCount - 1
-			).gameObject;
-		plantableShrooms.First().ShroomModel.transform.parent = plantableShrooms.First().gameObject.transform;
+        plantableShrooms.First().ShroomModel = shroom.gameObject.transform.GetChild(
+                shroom.gameObject.transform.childCount - 1
+            ).gameObject;
         plantableShrooms.RemoveAt(0);
 
         TriggerRespawn();
