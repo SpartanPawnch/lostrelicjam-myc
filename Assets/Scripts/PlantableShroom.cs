@@ -7,7 +7,7 @@ public class PlantableShroom : MonoBehaviour
     [SerializeField] GameState gameState;
 
     [SerializeField] GameObject character;
-    [SerializeField] GameObject ShroomModel;
+    [SerializeField] public GameObject ShroomModel;
     [SerializeField] MeshRenderer markerRenderer;
 
     private enum State
@@ -38,7 +38,8 @@ public class PlantableShroom : MonoBehaviour
             gameState.MushroomsHeld--;
             markerRenderer.enabled = false;
             // note: make sure child shroom's collider is inactive or removed so it can not be picked up
-            ShroomModel.SetActive(true);
+            ShroomModel.transform.position = this.transform.position;
+			ShroomModel.SetActive(true);
             state = State.Planted;
             gameState.plantedCount++;
         }
