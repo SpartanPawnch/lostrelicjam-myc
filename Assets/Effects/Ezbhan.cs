@@ -6,8 +6,8 @@ public class Ezbhan : MonoBehaviour
 {
     public float Displacement = 0.001F;
     public float EffectOpacity = 0.01F;
-    
-    void OnRenderImage(RenderTexture source, RenderTexture output) 
+
+    void OnRenderImage(RenderTexture source, RenderTexture output)
     {
         var sheet = new Material(Shader.Find("Hidden/Ezbhan"));
         sheet.SetFloat("_Ratio", (float)source.width / (float)source.height);
