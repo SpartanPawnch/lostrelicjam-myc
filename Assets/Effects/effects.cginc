@@ -208,10 +208,10 @@ fixed4 cube(float2 u, float ratio)
 
 float2 lsd_smoke__random2(float2 c) { float j = 4906.0*sin(dot(c,float2(169.7, 5.8))); float2 r; r.x = frac(512.0*j); j *= .125; r.y = frac(512.0*j);return r-0.5;}
 
-const float lsd_smoke__F2 =  0.3660254;
-const float lsd_smoke__G2 = -0.2113249;
+const float lsd_smoke_F2 =  0.3660254;
+const float lsd_smoke_G2 = -0.2113249;
 
-float lsd_smoke__simplex2d(float2 p){float2 s = floor(p + (p.x+p.y)*lsd_smoke__F2),x = p - s - (s.x+s.y)*lsd_smoke__G2; float e = step(0.0, x.x-x.y); float2 i1 = float2(e, 1.0-e),  x1 = x - i1 - lsd_smoke__G2, x2 = x - 1.0 - 2.0*lsd_smoke__G2; float3 w, d; w.x = dot(x, x); w.y = dot(x1, x1); w.z = dot(x2, x2); w = max(0.5 - w, 0.0); d.x = dot(lsd_smoke__random2(s + 0.0), x); d.y = dot(lsd_smoke__random2(s +  i1), x1); d.z = dot(lsd_smoke__random2(s + 1.0), x2); w *= w; w *= w; d *= w; return dot(d, float3(70.0, 70.0, 70.0));}
+float lsd_smoke__simplex2d(float2 p){float2 s = floor(p + (p.x+p.y)*lsd_smoke_F2),x = p - s - (s.x+s.y)*lsd_smoke_G2; float e = step(0.0, x.x-x.y); float2 i1 = float2(e, 1.0-e),  x1 = x - i1 - lsd_smoke_G2, x2 = x - 1.0 - 2.0*lsd_smoke_G2; float3 w, d; w.x = dot(x, x); w.y = dot(x1, x1); w.z = dot(x2, x2); w = max(0.5 - w, 0.0); d.x = dot(lsd_smoke__random2(s + 0.0), x); d.y = dot(lsd_smoke__random2(s +  i1), x1); d.z = dot(lsd_smoke__random2(s + 1.0), x2); w *= w; w *= w; d *= w; return dot(d, float3(70.0, 70.0, 70.0));}
 
 float3 lsd_smoke__rgb2yiq(float3 color){return mul(color, float3x3(0.299,0.587,0.114,0.596,-0.274,-0.321,0.211,-0.523,0.311));}
 float3 lsd_smoke__yiq2rgb(float3 color){return mul(color, float3x3(1.,0.956,0.621,1,-0.272,-0.647,1.,-1.107,1.705));}
